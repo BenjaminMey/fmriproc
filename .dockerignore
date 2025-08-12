@@ -1,0 +1,9 @@
+.idea
+idea/
+.venv
+venv/
+__pycache__/
+.gitignore
+*~
+*(Copy).*
+*test*

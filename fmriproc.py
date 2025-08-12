@@ -12,10 +12,11 @@ from sklearn.linear_model import LinearRegression
 from scipy import signal
 from scipy import interpolate
 
+default_anatname='SAGT13DMPRAGE.nii'
 
-def alignanatomical(taskname):
+def alignanatomical(taskname, anatname):
 
-    rawfile, anatfile, anatalignedfile, finalfile = getimgnames(taskname)
+    rawfile, anatfile, anatalignedfile, finalfile = getimgnames(taskname, anatname)
 
     targetres = 200
 
@@ -99,9 +100,9 @@ def alignanatomical(taskname):
     return
    
 
-def createimage(taskname):
+def createimage(taskname, anatname):
 
-    rawfile, anatfile, anatalignedfile, finalfile = getimgnames(taskname)
+    rawfile, anatfile, anatalignedfile, finalfile = getimgnames(taskname, anatname)
 
     # Makes final image
 
@@ -201,13 +202,13 @@ def createimage(taskname):
     return
     
 
-def thresholdcluster(taskname):
+def thresholdcluster(taskname, anatname):
 
     # Makes filtered, clustered image ready to overlay on anatomical
 
     origfile, refnumfile, alignedfile, paramfile, costfile, strippedfile, Zfile = getfilenames(taskname)
 
-    rawfile, anatfile, anatalignedfile, finalfile = getimgnames(taskname)
+    rawfile, anatfile, anatalignedfile, finalfile = getimgnames(taskname, anatname)
 
     # Thresholds
     Zthresh = 6.0
@@ -682,12 +683,12 @@ def getfilenames(taskname):
     return origfile, refnumfile, alignedfile, paramfile, costfile, strippedfile, Zfile
       
 
-def getimgnames(taskname):
+def getimgnames(taskname, anatname):
 
     # Getting all the imagenames
 
     rawfile = taskname + "FuncResults.nii"
-    anatfile = "SAGT13DMPRAGE.nii" # This can change obviously
+    anatfile = anatname
     finalfile = taskname + "OverlayResults.tiff"
     anatalignedfile = taskname + "AlignedAnatomy.nii"
 
@@ -806,7 +807,7 @@ def verbslogtotime(logfile,timefile):
     return
 
 
-def processall(taskname,timename):
+def processall(taskname, timename, anatname=default_anatname):
 
     findreference(taskname)
     alignfunc(taskname)
@@ -814,12 +815,12 @@ def processall(taskname,timename):
     stripbadframes(taskname,0.008)
     processstandard(taskname,timename)
     thresholdcluster(taskname)
-    alignanatomical(taskname)
+    alignanatomical(taskname, anatname)
     createimage(taskname)
 
     return
 
-def processmotor(taskname,lhtimename,rhtimename):
+def processmotor(taskname, lhtimename, rhtimename, anatname=default_anatname):
 
     findreference(taskname)
     alignfunc(taskname)
@@ -827,10 +828,10 @@ def processmotor(taskname,lhtimename,rhtimename):
     stripbadframes(taskname,0.008)
     processstandard(taskname,lhtimename,'LeftHand')
     processstandard(taskname,rhtimename,'RightHand')
-    thresholdcluster('LeftHand')
-    thresholdcluster('RightHand')
-    alignanatomical('LeftHand')
-    alignanatomical('RightHand')
+    thresholdcluster('LeftHand', anatname)
+    thresholdcluster('RightHand', anatname)
+    alignanatomical('LeftHand', anatname)
+    alignanatomical('RightHand', anatname)
     createimage('LeftHand')
     createimage('RightHand')
     
@@ -838,7 +839,7 @@ def processmotor(taskname,lhtimename,rhtimename):
 
 
 
-def hushprocessall(taskname,timename,hushfac):
+def hushprocessall(taskname, timename, hushfac, anatname=default_anatname):
 
     
     fixhush(taskname,hushfac)
@@ -848,9 +849,9 @@ def hushprocessall(taskname,timename,hushfac):
     getfinalcosthush(hushname,hushfac)
     stripbadframes(hushname,0.008)
     processhush(hushname,timename,hushfac)
-    thresholdcluster(hushname)
-    alignanatomical(hushname)
-    createimage(hushname)
+    thresholdcluster(hushname, anatname)
+    alignanatomical(hushname, anatname)
+    createimage(hushname, anatname)
 
     return
 
