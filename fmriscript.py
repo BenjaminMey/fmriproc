@@ -62,10 +62,11 @@ def main():
             fmriproc.processmotor('MOTOR_6_MIN_MB', timedir + 'LeftHandMB.time', timedir + 'RightHandMB.time',
                                   args.anat)
 
-            logfile = glob.glob("*Verbs*.log")
-            logfile = logfile[0]
-            fmriproc.verbslogtotime(logfile, 'Verbs.time')
-            fmriproc.hushprocessall('VERBSSILENTGRADIENTMB', 'Verbs.time', 4, anatname)
+            #TODO acquire Verbs log example for testing
+            #logfile = glob.glob("*Verbs*.log")
+            #logfile = logfile[0]
+            #fmriproc.verbslogtotime(logfile, 'Verbs.time')
+            #fmriproc.hushprocessall('VERBSSILENTGRADIENTMB', 'Verbs.time', 4, anatname)
 
             fmriproc.hushprocessall('STORIESSILENTGRADIENTMB', timedir + 'StoriesMB.time', 3, anatname)
         else:
