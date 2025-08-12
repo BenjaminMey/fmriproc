@@ -32,7 +32,7 @@ def make_argument_parser():
                    help='Add space separated taskname(s) to process, default is all.') #accomplished in main
     p.add_argument('-c', '--timecoding',
                    nargs='*',
-                   help='Add space separated time course regression codings for each taskname to process, no default')
+                   help='Add space separated time course regression codings for each taskname to process, default for built-in tasks')
     p.add_argument('--test',
                    action='store_true',
                    help='Test workflow on provided dataset')
