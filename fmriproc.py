@@ -814,9 +814,9 @@ def processall(taskname, timename, anatname=default_anatname):
     getfinalcost(taskname)
     stripbadframes(taskname,0.008)
     processstandard(taskname,timename)
-    thresholdcluster(taskname)
+    thresholdcluster(taskname, anatname)
     alignanatomical(taskname, anatname)
-    createimage(taskname)
+    createimage(taskname, anatname)
 
     return
 
@@ -832,8 +832,8 @@ def processmotor(taskname, lhtimename, rhtimename, anatname=default_anatname):
     thresholdcluster('RightHand', anatname)
     alignanatomical('LeftHand', anatname)
     alignanatomical('RightHand', anatname)
-    createimage('LeftHand')
-    createimage('RightHand')
+    createimage('LeftHand', anatname)
+    createimage('RightHand', anatname)
     
     
 
