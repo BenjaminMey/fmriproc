@@ -13,7 +13,7 @@ def make_argument_parser():
               'functional task and affine align the other volumes stripping those that exceed the cost function. ' \
               'Then performing regression with the time and motion parameters, and then aligning the functional data ' \
               'to the anatomical data.',
-        epilog='Script default taskname functional files: SYNONYMS5MINMB, VISUAL5MINMB, MOTOR6MINMB, ' \
+        epilog='Script default taskname functional files: SYNONYMS_5_MIN_MB, VISUAL_5_MIN_MB, MOTOR_6_MIN_MB, ' \
                'VERBSSILENTGRADIENTMB, STORIESSILENTGRADIENTMB.'
     )
     p.add_argument('--version',
